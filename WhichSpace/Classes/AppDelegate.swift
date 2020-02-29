@@ -22,6 +22,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, SUUpdaterDel
     let spacesMonitorFile = "~/Library/Preferences/com.apple.spaces.plist"
 
     let statusBarItem = NSStatusBar.system().statusItem(withLength: 27)
+    let statusBarExternalMonitorItem = NSStatusBar.system().statusItem(withLength: 27)
     let conn = _CGSDefaultConnection()
 
     static var darkModeEnabled = false
@@ -54,6 +55,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, SUUpdaterDel
         statusBarItem.button?.cell = StatusItemCell()
         statusBarItem.image = NSImage(named: "default") // This icon appears when switching spaces when cell length is variable width.
         statusBarItem.menu = statusMenu
+
+        statusBarExternalMonitorItem.button?.cell = StatusItemCell()
+        statusBarExternalMonitorItem.image = NSImage(named: "default") // This icon appears when switching spaces when cell length is variable width.
+        statusBarExternalMonitorItem.button?.alphaValue = 0.5
     }
 
     fileprivate func configureSparkle() {
@@ -110,17 +115,35 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, SUUpdaterDel
     }
 
     func updateActiveSpaceNumber() {
-        let info = CGSCopyManagedDisplaySpaces(conn) as! [NSDictionary]
-        let displayInfo = info[0]
-        let activeSpaceID = (displayInfo["Current Space"]! as! NSDictionary)["ManagedSpaceID"] as! Int
-        let spaces = displayInfo["Spaces"] as! NSArray
-        for (index, space) in spaces.enumerated() {
-            let spaceID = (space as! NSDictionary)["ManagedSpaceID"] as! Int
-            let spaceNumber = index + 1
-            if spaceID == activeSpaceID {
-                statusBarItem.button?.title = String("\(spaceNumber)")
-                return
+        let updateStatusBarItem: (_ dict: NSDictionary) -> String = { dict in
+            let activeSpaceID = (dict["Current Space"]! as! NSDictionary)["ManagedSpaceID"] as! Int
+            let spaces = dict["Spaces"] as! NSArray
+            for (index, space) in spaces.enumerated() {
+                let spaceID = (space as! NSDictionary)["ManagedSpaceID"] as! Int
+                let spaceNumber = index + 1
+                if spaceID == activeSpaceID {
+                    return String(spaceNumber)
+                }
             }
+            return "-"
+        }
+
+        let info = CGSCopyManagedDisplaySpaces(conn) as! [NSDictionary]
+        // Update for active monitor
+        if let activeInfo = info.first {
+            let space = updateStatusBarItem(activeInfo)
+            statusBarItem.button?.title = space
+        }
+
+        if info.count >= 2 {
+            if statusBarExternalMonitorItem.menu == nil {
+                statusBarExternalMonitorItem.menu = statusMenu
+            }
+            let secondayInfo = info[1]
+            let space = updateStatusBarItem(secondayInfo)
+            statusBarExternalMonitorItem.button?.title = space
+        } else {
+            statusBarExternalMonitorItem.menu = nil
         }
     }
 
