@@ -11,6 +11,5 @@ Have you ever forgotten _which space_ is currently active on macOS (10.11+) and 
 ## Contributing
 [Pull requests](https://github.com/gechr/WhichSpace/pulls) are welcome!
 
-## TODO
-* Add support for macOS 10.9 (Mavericks) + 10.10 (Yosemite)
-* Add multi-monitor support
+## This is A fork
+* Adds a secondary menu item to support secondary monitor.  
