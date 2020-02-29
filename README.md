@@ -1,4 +1,7 @@
-## WhichSpace [![Build Status](https://travis-ci.org/gechr/WhichSpace.svg?branch=master)](https://travis-ci.org/gechr/WhichSpace)
+## This is A fork
+* Adds a secondary menu item to support secondary monitor.  
+
+## WhiteSpace - Original Author @gechr [![Build Status](https://travis-ci.org/gechr/WhichSpace.svg?branch=master)](https://travis-ci.org/gechr/WhichSpace)
 Have you ever forgotten _which space_ is currently active on macOS (10.11+) and wanted a quick way to tell? Didn't think so... but I did!
 
 ## Screenshot
@@ -11,5 +14,3 @@ Have you ever forgotten _which space_ is currently active on macOS (10.11+) and 
 ## Contributing
 [Pull requests](https://github.com/gechr/WhichSpace/pulls) are welcome!
 
-## This is A fork
-* Adds a secondary menu item to support secondary monitor.  
