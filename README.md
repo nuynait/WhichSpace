@@ -1,6 +1,8 @@
 ## This is A fork
 * Adds a secondary menu item to support secondary monitor.
 
+![](https://raw.githubusercontent.com/nuynait/WhichSpace/master/Screenshots/Multi-Monitor.png)
+
 Download: [Click here to download](./Release/v1.0/WhichSpace.zip)
 
 ## WhiteSpace - Original Author @gechr [![Build Status](https://travis-ci.org/gechr/WhichSpace.svg?branch=master)](https://travis-ci.org/gechr/WhichSpace)
